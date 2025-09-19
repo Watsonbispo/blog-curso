@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: dockerfiles/php/dockerfile
+    container_name: blog_php
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_PORTA=3306
+      - DB_NOME=blog
+      - DB_USUARIO=root
+      - DB_SENHA=root123
+
+  mysql:
+    build:
+      context: .
+      dockerfile: dockerfiles/mysql/Dockerfile
+    container_name: blog_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=blog
+      - MYSQL_USER=blog_user
+      - MYSQL_PASSWORD=blog_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

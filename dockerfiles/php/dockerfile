@@ -1,0 +1,32 @@
+FROM php:latest
+
+WORKDIR /var/www/html
+
+
+COPY . .
+
+RUN docker-php-ext-install pdo_mysql
+
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev\
+    libssl-dev\
+    ca-certificates\
+    git\
+    zip\
+    unzip\
+    curl
+
+# Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Instalar xdebug via pecl
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+# Configurar composer para usar HTTP em vez de HTTPS
+ENV COMPOSER_DISABLE_TLS=1
+
+CMD ["php", "-S", "0.0.0.0:8000"]

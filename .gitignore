@@ -1,0 +1,36 @@
+# Arquivos de configuração local
+configuracao.php
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+tmp/
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Composer
+vendor/
+composer.lock
+
+# Docker
+.docker/
+
+# Backup de banco
+*.sql.backup
+*.dump
