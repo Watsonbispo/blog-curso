@@ -31,5 +31,7 @@ ENV COMPOSER_DISABLE_TLS=1
 
 # Configurar variáveis de ambiente para o PHP
 ENV SERVER_NAME=localhost
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 CMD ["php", "-S", "0.0.0.0:80"]
