@@ -29,6 +29,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Configurar composer para usar HTTP em vez de HTTPS
 ENV COMPOSER_DISABLE_TLS=1
 
+# Copiar configuração personalizada do PHP
+COPY dockerfiles/php/php.ini /usr/local/etc/php/php.ini
+
 # Configurar variáveis de ambiente para o PHP
 ENV SERVER_NAME=localhost
 ENV LANG=C.UTF-8

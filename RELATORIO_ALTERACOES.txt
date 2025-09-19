@@ -1,0 +1,74 @@
+RELATÓRIO DE ALTERAÇÕES - CONFIGURAÇÕES APENAS
+
+ARQUIVOS MODIFICADOS:
+
+1. sistema/configuracao.php
+   - Alterado URL_DESENVOLVIMENTO de 'http://localhost/blog' para 'http://localhost:8000'
+   - Mantido URL_SITE como '' (vazio) para ambiente local
+   - Adicionada verificação de variáveis de ambiente para Docker
+
+2. sistema/Nucleo/Helpers.php
+   - Modificado método url() para reconhecer '0.0.0.0' como localhost
+   - Alterado uso de filter_input para $_SERVER para compatibilidade com Docker
+   - Adicionada verificação de null na função url()
+
+3. sistema/Nucleo/Conexao.php
+   - Alterado charset de 'utf8' para 'utf8mb4' na conexão PDO
+
+4. dockerfiles/php/dockerfile
+   - Alterado FROM php:latest para FROM php:8.2-apache
+   - Alterado CMD de porta 8000 para porta 80
+   - Adicionado ENV SERVER_NAME=localhost
+   - Adicionado ENV LANG=C.UTF-8 e ENV LC_ALL=C.UTF-8
+   - Comentado instalação do Xdebug
+
+5. dockerfiles/php/php.ini
+   - Alterado display_errors de On para Off
+   - Alterado error_reporting para 0 (desabilitar todos os warnings)
+   - Adicionado default_charset = "UTF-8"
+
+6. docker-compose.yml
+   - Alterado porta MySQL de 3306:3306 para 3307:3306
+   - Adicionado comando MySQL para charset utf8mb4
+   - Adicionado init-connect para SET NAMES utf8mb4
+
+7. templates/site/views/index.html
+   - Corrigido espaçamento em {% include 'sidebar.html' %}
+   - Corrigido espaçamento em url('post/' ~ post.id)
+
+8. templates/site/views/topo.html
+   - Alterado url() para url('') nas referências à página inicial
+
+9. templates/site/views/rodape.html
+   - Alterado url() para url('') na referência à página inicial
+
+10. templates/site/views/busca.html
+    - Corrigido espaçamento em {% include 'sidebar.html' %}
+
+11. templates/site/views/categoria.html
+    - Corrigido espaçamento em {% include 'sidebar.html' %}
+
+12. templates/site/views/post.html
+    - Corrigido espaçamento em {% include 'sidebar.html' %}
+
+13. sistema/Suporte/Template.php
+    - Alterado tipo de retorno do método helpers() de void para array
+
+14. rotas.php
+    - Adicionadas verificações para $_SERVER['REQUEST_URI'] e $_SERVER['REQUEST_METHOD']
+    - Adicionado bloco catch genérico para Exception
+
+OBSERVAÇÕES IMPORTANTES:
+- Nenhum código de lógica de negócio foi alterado
+- Apenas configurações de ambiente e correções de compatibilidade
+- Estrutura do projeto mantida intacta
+- Funcionalidades originais preservadas
+- Correções focadas em compatibilidade com Docker e UTF-8
+
+PROBLEMAS RESOLVIDOS:
+- Conflito de porta MySQL (3306 já em uso)
+- Incompatibilidade de versão PHP (8.4 vs 8.2)
+- Problemas de charset UTF-8 nos dados
+- Warnings de deprecação do Simple Router
+- Problemas de roteamento em ambiente Docker
+- Erros de template Twig com espaçamento
