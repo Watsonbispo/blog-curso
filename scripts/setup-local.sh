@@ -9,18 +9,18 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null; then
+if ! command -v docker &> /dev/null || ! docker compose version &> /dev/null; then
     echo "❌ Docker Compose não está instalado. Por favor, instale o Docker Compose primeiro."
     exit 1
 fi
 
 # Parar containers existentes
 echo "🛑 Parando containers existentes..."
-docker-compose down
+docker compose down
 
 # Construir e iniciar containers
 echo "🔨 Construindo e iniciando containers..."
-docker-compose up -d --build
+docker compose up -d --build
 
 # Aguardar MySQL estar pronto
 echo "⏳ Aguardando MySQL estar pronto..."
@@ -32,4 +32,4 @@ docker exec -i blog_mysql mysql -u root -proot123 < database.sql
 
 echo "✅ Ambiente local configurado com sucesso!"
 echo "🌐 Acesse: http://localhost:8000"
-echo "🗄️  MySQL: localhost:3306 (usuário: root, senha: root123)"
+echo "🗄️  MySQL: localhost:3307 (usuário: root, senha: root123)"

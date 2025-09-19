@@ -46,22 +46,22 @@ class Template
      */
     private function helpers(): void
     {
-        array(
-            $this->twig->addFunction(
-                    new \Twig\TwigFunction('url', function (string $url) {
-                                return Helpers::url($url);
-                            })
-            ),
-            $this->twig->addFunction(
-                    new \Twig\TwigFunction('saudacao', function () {
-                                return Helpers::saudacao();
-                            })
-            ),
-            $this->twig->addFunction(
-                    new \Twig\TwigFunction('resumirTexto', function (string $texto, int $limite) {
-                                return Helpers::resumirTexto($texto, $limite);
-                            })
-            ),
+        $this->twig->addFunction(
+            new \Twig\TwigFunction('url', function (string $url) {
+                return Helpers::url($url);
+            })
+        );
+        
+        $this->twig->addFunction(
+            new \Twig\TwigFunction('saudacao', function () {
+                return Helpers::saudacao();
+            })
+        );
+        
+        $this->twig->addFunction(
+            new \Twig\TwigFunction('resumirTexto', function (string $texto, int $limite) {
+                return Helpers::resumirTexto($texto, $limite);
+            })
         );
     }
 
