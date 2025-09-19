@@ -23,10 +23,13 @@ RUN apt-get update && apt-get install -y \
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Instalar xdebug via pecl
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+# Instalar xdebug via pecl (desabilitado para evitar warnings)
+# RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # Configurar composer para usar HTTP em vez de HTTPS
 ENV COMPOSER_DISABLE_TLS=1
+
+# Configurar variáveis de ambiente para o PHP
+ENV SERVER_NAME=localhost
 
 CMD ["php", "-S", "0.0.0.0:80"]

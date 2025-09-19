@@ -109,13 +109,13 @@ public static function dataAtual(): string
  */
 public static function url(string $url = null): string
 {
-    $servidor = filter_input(INPUT_SERVER, 'SERVER_NAME');
-    $ambiente = ($servidor == 'localhost' ? URL_DESENVOLVIMENTO : URL_PRODUCAO);
+    $servidor = $_SERVER['SERVER_NAME'] ?? filter_input(INPUT_SERVER, 'SERVER_NAME');
+    $ambiente = (in_array($servidor, ['localhost', '0.0.0.0']) ? URL_DESENVOLVIMENTO : URL_PRODUCAO);
 
-    if (str_starts_with($url, '/')) {
+    if ($url && str_starts_with($url, '/')) {
         return $ambiente . $url;
     }
-    return $ambiente . '/' . $url;
+    return $ambiente . '/' . ($url ?? '');
 }
 
 /**
@@ -124,9 +124,9 @@ public static function url(string $url = null): string
  */
 public static function localhost(): bool
 {
-    $servidor = filter_input(INPUT_SERVER, 'SERVER_NAME');
+    $servidor = $_SERVER['SERVER_NAME'] ?? filter_input(INPUT_SERVER, 'SERVER_NAME');
 
-    if ($servidor == 'localhost') {
+    if (in_array($servidor, ['localhost', '0.0.0.0'])) {
         return true;
     }
     return false;
